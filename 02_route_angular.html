@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>AngularJs路由</title>
+	<script src="angularjs/angular.min.js"></script>
+	<script src="angularjs/angular-route.js"></script>
+</head>
+<body ng-app="app">
+	<div>
+		<ul>
+			<li><a href="#first">登录</a></li>
+			<li><a href="#second">注册</a></li>
+			<li><a href="#third">第三个</a></li>
+		</ul>
+		<div ng-view>
+			<!-- ng-view是一个视图模板的指令，指定返回的数据在该指令所在节点显示，
+			也可以称为布局模板，路由匹配的数据(视图)会被加载渲染到该区域 -->
+		</div>
+	</div>
+	
+</body>
+<script>
+	// 声明app 应用时需要用到路由，所以在数组里添加路由的依赖
+	var app = angular.module("app",["ngRoute"]);
+	app.controller("myCtrl",["$scope","$http",function($scope,$http){
+		// $scope.names = ["张翼德","关云长","刘玄德","赵子龙"];
+		// 发送http请求，请求经过php返回一个数组，然后将数组展示在视图上
+		$http({
+			url:"./names.php",
+			method:"get"
+		}).success(function(result){
+			$scope.names = result;
+		})
+	}]);
+	//  使用路由之前，需要对路由进行配置
+	app.config(["$routeProvider",function($routeProvider){
+		$routeProvider.when("/",{
+			template:"<h1>这是首页的内容</h1>"
+		}).when("/first",{
+			template:"<input type='text'><input type='text'><input type='button' value='登录'>"
+		});
+		$routeProvider.when("/second",{
+			templateUrl:"./templateUrl.html",
+			controller:"myCtrl"
+		});
+		$routeProvider.when("/third",{
+			templateUrl:"./example.html"
+		}).otherwise({
+			// template:"<h1>地址错误</h1>"
+			// 重定向，用于路由的跳转，这里跳转到 / 路由去
+			redirectTo:"/"
+		})
+	}]);
+</script>
+</html>

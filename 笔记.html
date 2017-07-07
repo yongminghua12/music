@@ -1,0 +1,55 @@
+
+<a
+二、模块加载配置
+	启动 ==》 初始化(配置和运行)
+	使用 config方法对模块的配置
+	AngularJs中的服务绝大部分都有一个对应的provider，用来执行
+	与之对应服务的功能或者执行配置，比如 $filterProvider
+
+三、路由(route)
+	
+	SPA(Single Page Application)
+	单页面应用
+	通过一个页面来展示所有功能，通过 Ajax动态获取数据，
+	然后进行实时渲染，结合 css3动画模仿原生的 app
+	使用路由做单页面的特点：
+		1、不会产生页面的跳转
+		2、将若干功能集中到一个页面
+		3、动态生成数据，通过 Ajax获取
+		4、增强性能，增强用户体验
+		5、模仿手机 app的交互
+	单页面应用的要求：
+		1、只有一个页面，但是可以有多个视图
+		2、链接必须使用锚点
+
+	前端中的路由是锚点，AngularJs对这个实现原理进行了封装，将锚点的变化封装成路由(route)
+	路由的使用：
+		1、引入 AngularJs和 route文件
+			angular.min.js,angular-route.js
+		2、创建应用时需要依赖路由 ngRoute
+			var app = angular.module("app",["ngRoute"]);
+		3、对路由进行配置
+			app.config(["$routeProvider",function($routeProvider){
+				路由具体做的事
+				通过 $routeProvider的 when方法对路由进行具体配置
+				when方法里有2个参数第一个是字符串，表示 url的 hash值
+				第二个参数是一个对象用于匹配当前路由的参数，如视图，控制器等
+					该对象可以有的类型有：
+						template       : 返回一个字符串
+						redirectTo     : 重定向，跳转到其他的路由
+						templateUrl    : 引入外部的视图
+						controller     : 视图模板所属的控制器名
+			}]);
+
+		4、在视图中写一个占位符 ng-view
+			在需要展示数据的节点上添加 ng-view属性
+			ng-view只负责视图的展示功能，不负责数据的解析
+
+	路由的参数
+		如何获取路由的参数
+		通过$routeParams对象获取
+
+作业：
+	1、复习，将当天的代码回顾并练习
+	2、将最后的music案例重做
+	3、独立完成案例

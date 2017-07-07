@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>原生路由</title>
+</head>
+<body>
+	<ul>
+		<li><a href="#first">第一个</a></li>
+		<li><a href="#second">第二个</a></li>
+		<li><a href="#third">第三个</a></li>
+	</ul>
+	<div id="d">
+		
+	</div>
+</body>
+<script>
+	// 获取地址栏中的锚点的内容
+	window.addEventListener("hashchange", function(){
+		console.log(location.hash);
+		//获取锚点
+		var hash = location.hash;
+		// 获取div节点
+		var div = document.getElementById("d");
+		/*
+			switch(hash){
+				case "#first":div.innerHTML="first";break;
+				case "#second":div.innerHTML="second";break;
+				case "#third":div.innerHTML="third";break;
+			}
+		 */
+		// 模拟发送请求获取数组
+		// 在url中，#会被当成锚点处理，不会作为一个值，所以要去掉#
+		var xhr = new XMLHttpRequest();
+		hash = hash.substr(1);
+		var url = "./data.php?hash="+hash;
+		console.log(url);
+		// 打开链接
+		xhr.open("get",url);
+		// 发送
+		xhr.send();
+		// 监听
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				var result = xhr.responseText;
+				console.log(result);
+				div.innerHTML = result;
+			}
+		};
+	});
+</script>
+</html>
